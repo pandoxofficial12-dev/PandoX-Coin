@@ -13,7 +13,7 @@
       --gold-premium: #ffd700;
       --gold-dark: #d4af37;
       --bg-dark: #000022;
-      --card-bg: rgba(8, 8, 45, 0.75);
+      --card-bg: rgba(5, 5, 40, 0.75);
       --text-light: #f0faff;
     }
 
@@ -35,12 +35,6 @@
       background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2000&q=80') center/cover;
       opacity: 0.12;
       z-index: -2;
-      animation: bgTwinkle 20s infinite alternate;
-    }
-
-    @keyframes bgTwinkle {
-      0%, 100% { opacity: 0.12; }
-      50% { opacity: 0.18; }
     }
 
     .particles {
@@ -70,7 +64,6 @@
       font-size: 3.6em;
       background: linear-gradient(90deg, var(--gold-premium), var(--neon-blue), var(--gold-premium));
       -webkit-background-clip: text;
-      background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
       margin: 30px 0 20px;
@@ -133,7 +126,7 @@
       justify-content: center;
     }
 
-    .social-btn, .earn-btn {
+    .social-btn, .earn-btn, #copyReferralBtn {
       position: relative;
       overflow: hidden;
       background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
@@ -148,7 +141,7 @@
       transition: all 0.4s ease;
     }
 
-    .social-btn::after, .earn-btn::after {
+    .social-btn::after, .earn-btn::after, #copyReferralBtn::after {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
@@ -160,11 +153,11 @@
       pointer-events: none;
     }
 
-    .social-btn:active::after, .earn-btn:active::after {
+    .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after {
       width: 300px; height: 300px;
     }
 
-    .social-btn:hover, .earn-btn:hover {
+    .social-btn:hover, .earn-btn:hover, #copyReferralBtn:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 45px rgba(0, 255, 255, 0.6);
     }

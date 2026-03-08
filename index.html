@@ -17,14 +17,6 @@
       --text-light: #f0faff;
     }
 
-    [data-theme="light"] {
-      --bg-dark: #f0f4ff;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --text-light: #0a0a2a;
-      --neon-blue: #0066ff;
-      --gold-premium: #b8860b;
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -35,13 +27,6 @@
       padding: 15px;
       overflow-x: hidden;
       position: relative;
-      transition: background 0.8s ease;
-      animation: globalPulse 12s infinite alternate;
-    }
-
-    @keyframes globalPulse {
-      0%, 100% { box-shadow: inset 0 0 140px rgba(0, 240, 255, 0.08); }
-      50% { box-shadow: inset 0 0 200px rgba(255, 215, 0, 0.12); }
     }
 
     body::before {
@@ -65,100 +50,104 @@
       border-radius: 50%;
       opacity: 0;
       animation: particleFloat 60s infinite linear;
-      box-shadow: 0 0 40px;
+      box-shadow: 0 0 30px;
     }
 
-    .particle.gold { background: var(--gold-premium); box-shadow: 0 0 40px var(--gold-premium); }
-    .particle.neon { background: var(--neon-blue); box-shadow: 0 0 40px var(--neon-blue); }
+    .particle.gold { background: var(--gold-premium); box-shadow: 0 0 30px var(--gold-premium); }
+    .particle.neon { background: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); }
 
     @keyframes particleFloat {
-      0% { transform: translateY(200vh) scale(0.05) rotate(0deg); opacity: 0; }
+      0% { transform: translateY(180vh) scale(0.05) rotate(0deg); opacity: 0; }
       10% { opacity: 1; }
       90% { opacity: 1; }
-      100% { transform: translateY(-120vh) scale(0.5) rotate(2880deg); opacity: 0; }
+      100% { transform: translateY(-100vh) scale(0.4) rotate(2160deg); opacity: 0; }
+    }
+
+    .logo-container {
+      text-align: center;
+      margin: 30px 0 50px;
+    }
+
+    .logo {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 14px double var(--gold-premium);
+      box-shadow: 0 0 120px var(--gold-premium), inset 0 0 60px var(--neon-blue);
+      animation: logoPulse 6s infinite alternate;
+    }
+
+    @keyframes logoPulse {
+      from { transform: scale(1); box-shadow: 0 0 120px var(--gold-premium); }
+      to { transform: scale(1.04); box-shadow: 0 0 160px var(--neon-blue); }
     }
 
     h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 5em;
+      font-size: 3.8em;
       background: linear-gradient(90deg, var(--gold-premium), var(--neon-blue), var(--gold-premium));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 70px rgba(255, 215, 0, 1);
-      margin: 70px 0 40px;
-      letter-spacing: 12px;
+      text-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+      margin: 20px 0 30px;
+      letter-spacing: 6px;
       text-align: center;
-      animation: titleShine 12s infinite linear;
     }
 
-    @keyframes titleShine {
-      0% { background-position: -800%; }
-      100% { background-position: 800%; }
-    }
-
-    .logo {
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      border: 22px double var(--gold-premium);
-      box-shadow: 0 0 200px var(--gold-premium), inset 0 0 100px var(--neon-blue);
-      margin: 80px auto;
-      display: block;
-      animation: logoSpinGlow 20s infinite linear;
-    }
-
-    @keyframes logoSpinGlow {
-      0% { transform: rotate(0deg) scale(1); box-shadow: 0 0 200px var(--gold-premium); }
-      50% { transform: rotate(180deg) scale(1.1); box-shadow: 0 0 280px var(--neon-blue); }
-      100% { transform: rotate(360deg) scale(1); box-shadow: 0 0 200px var(--gold-premium); }
+    .subtitle {
+      font-size: 1.5em;
+      color: var(--text-light);
+      margin-bottom: 50px;
+      text-align: center;
+      opacity: 0.95;
     }
 
     .section {
       background: var(--card-bg);
-      backdrop-filter: blur(40px);
-      border-radius: 56px;
-      padding: 80px 50px;
-      margin: 80px 0;
-      border: 1px solid rgba(255, 215, 0, 0.7);
-      box-shadow: 0 50px 160px rgba(0, 255, 255, 0.5);
-      transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 40px 25px;
+      margin: 40px 0;
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      box-shadow: 0 30px 80px rgba(0, 255, 255, 0.3);
+      transition: all 0.6s ease;
     }
 
     .section:hover {
-      transform: translateY(-35px) scale(1.05);
-      box-shadow: 0 100px 240px rgba(255, 215, 0, 0.8);
+      transform: translateY(-10px);
+      box-shadow: 0 50px 120px rgba(255, 215, 0, 0.5);
     }
 
     h2 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 4em;
+      font-size: 2.5em;
       color: var(--neon-blue);
-      text-shadow: 0 0 50px var(--neon-blue);
-      margin-bottom: 70px;
+      text-shadow: 0 0 30px var(--neon-blue);
+      margin-bottom: 30px;
       text-align: center;
     }
 
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 50px;
+      gap: 20px;
       justify-content: center;
     }
 
     .social-btn, .earn-btn, #copyReferralBtn, #shareXBtn {
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
       color: #000;
       border: none;
-      padding: 28px 80px;
+      padding: 16px 40px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 1.5em;
+      font-size: 1.2em;
       cursor: pointer;
-      box-shadow: 0 20px 70px rgba(255, 215, 0, 0.8);
-      transition: all 0.7s ease;
+      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .social-btn::after, .earn-btn::after, #copyReferralBtn::after, #shareXBtn::after {
@@ -166,26 +155,25 @@
       position: absolute;
       top: 50%; left: 50%;
       width: 0; height: 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      transition: width 2s ease, height 2s ease;
-      pointer-events: none;
+      transition: width 0.8s ease, height 0.8s ease;
     }
 
     .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after, #shareXBtn:active::after {
-      width: 1200px; height: 1200px;
+      width: 400px; height: 400px;
     }
 
     .social-btn:hover, .earn-btn:hover, #copyReferralBtn:hover, #shareXBtn:hover {
-      transform: translateY(-15px);
-      box-shadow: 0 60px 180px rgba(0, 255, 255, 1);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 255, 255, 0.7);
     }
 
     .earn-btn {
       background: linear-gradient(135deg, var(--neon-blue), var(--gold-premium));
-      padding: 32px 130px;
-      font-size: 1.7em;
+      padding: 20px 80px;
+      font-size: 1.4em;
     }
 
     .earn-btn:disabled {
@@ -195,98 +183,51 @@
     }
 
     #status {
-      margin: 80px 0;
-      font-size: 2.2em;
+      margin: 40px 0;
+      font-size: 1.6em;
       color: var(--gold-premium);
-      text-shadow: 0 0 50px var(--gold-premium);
+      text-shadow: 0 0 30px var(--gold-premium);
       font-weight: 500;
       text-align: center;
     }
 
-    .subtitle {
-      font-size: 2.4em;
-      color: var(--text-light);
-      margin: 60px 0;
-      text-align: center;
-      opacity: 0.98;
-    }
-
-    #ranking {
-      display: grid;
-      gap: 50px;
-      margin-top: 80px;
-    }
-
-    .rank-card {
-      background: rgba(0, 0, 0, 0.95);
-      border-radius: 44px;
-      padding: 50px;
-      border: 1px solid rgba(255, 215, 0, 0.8);
-      box-shadow: 0 25px 100px rgba(0, 255, 255, 0.6);
-      transition: all 0.9s ease;
-      animation: fadeInUp 2.5s ease-out forwards;
-      opacity: 0;
-    }
-
-    .rank-card:nth-child(1) { animation-delay: 0.8s; }
-    .rank-card:nth-child(2) { animation-delay: 1.5s; }
-    .rank-card:nth-child(3) { animation-delay: 2.2s; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(100px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .rank-card:hover {
-      transform: translateY(-25px);
-      box-shadow: 0 80px 240px rgba(255, 215, 0, 1);
-    }
-
-    .rank-position {
-      font-size: 3.5em;
-      font-weight: bold;
-      color: var(--gold-premium);
-      margin-bottom: 25px;
-    }
-
-    .medal { font-size: 3em; margin-left: 25px; }
-
     #nextClaim {
-      font-size: 2.2em;
+      font-size: 1.5em;
       color: var(--gold-premium);
-      margin: 60px 0;
+      margin: 30px 0;
       font-weight: bold;
       text-align: center;
     }
 
     #referralSection {
-      margin: 70px 0;
+      margin: 40px 0;
       text-align: center;
     }
 
     #referralInput {
       width: 100%;
-      max-width: 500px;
-      padding: 32px;
+      max-width: 400px;
+      padding: 20px;
       border-radius: 50px;
       border: 2px solid var(--gold-premium);
-      background: rgba(5, 5, 40, 0.99);
+      background: rgba(5, 5, 40, 0.98);
       color: white;
-      font-size: 1.6em;
+      font-size: 1.3em;
       text-align: center;
-      box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.6);
+      box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.4);
+      margin-bottom: 20px;
     }
 
     #copyReferralBtn, #shareXBtn {
-      margin-top: 40px;
+      margin: 15px 10px;
       background: var(--gold-premium);
       color: #000;
-      padding: 28px 100px;
+      padding: 18px 70px;
       border-radius: 50px;
       border: none;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 20px 80px rgba(255, 215, 0, 1);
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7);
     }
 
     #disconnectBtn {
@@ -294,37 +235,55 @@
       color: white;
     }
 
-    #themeToggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.25);
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      font-size: 2em;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-      z-index: 1000;
+    #ranking {
+      display: grid;
+      gap: 30px;
+      margin-top: 50px;
     }
 
-    canvas#confetti {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
+    .rank-card {
+      background: rgba(0, 0, 0, 0.95);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      box-shadow: 0 15px 60px rgba(0, 255, 255, 0.4);
+      transition: all 0.6s ease;
+      animation: fadeInUp 1.5s ease-out forwards;
+      opacity: 0;
     }
+
+    .rank-card:nth-child(1) { animation-delay: 0.4s; }
+    .rank-card:nth-child(2) { animation-delay: 0.8s; }
+    .rank-card:nth-child(3) { animation-delay: 1.2s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rank-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 40px 120px rgba(255, 215, 0, 0.7);
+    }
+
+    .rank-position {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: var(--gold-premium);
+      margin-bottom: 15px;
+    }
+
+    .medal { font-size: 2em; margin-left: 15px; }
   </style>
 </head>
 <body>
 
-  <button id="themeToggle">☀️</button>
   <div class="particles" id="particles"></div>
   <canvas id="confetti"></canvas>
 
-  <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX Logo" class="logo">
+  <div class="logo-container">
+    <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX Logo" class="logo">
+  </div>
 
   <h1>PandoX</h1>
   <p class="subtitle">Conecta tu wallet • Reclama cada 6 horas • Invita y domina</p>
@@ -357,24 +316,24 @@
   </div>
 
 <script>
-// Partículas máximas
+// Partículas doradas y neón
 function createParticles() {
   const container = document.getElementById('particles');
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 100; i++) {
     const particle = document.createElement('div');
     particle.className = 'particle';
-    if (i % 2 === 0) particle.classList.add('neon');
-    const size = Math.random() * 12 + 5;
+    if (i % 3 === 0) particle.classList.add('neon');
+    const size = Math.random() * 6 + 2;
     particle.style.width = particle.style.height = size + 'px';
     particle.style.left = Math.random() * 100 + 'vw';
-    particle.style.animationDelay = Math.random() * 60 + 's';
-    particle.style.animationDuration = Math.random() * 90 + 90 + 's';
+    particle.style.animationDelay = Math.random() * 30 + 's';
+    particle.style.animationDuration = Math.random() * 50 + 50 + 's';
     container.appendChild(particle);
   }
 }
 createParticles();
 
-// Confeti máximo
+// Confeti al reclamar
 function launchConfetti() {
   const canvas = document.getElementById('confetti');
   const ctx = canvas.getContext('2d');
@@ -382,14 +341,14 @@ function launchConfetti() {
   canvas.height = window.innerHeight;
 
   const particles = [];
-  for (let i = 0; i < 600; i++) {
+  for (let i = 0; i < 300; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height - canvas.height,
-      size: Math.random() * 20 + 10,
-      speed: Math.random() * 16 + 8,
-      rotation: Math.random() * 2880,
-      color: ['#FFD700', '#FFEA00', '#00f0ff', '#FFFFFF', '#FFFF99', '#FFAA00', '#D4AF37', '#C0C0C0', '#FF69B4'][Math.floor(Math.random() * 9)]
+      size: Math.random() * 12 + 6,
+      speed: Math.random() * 8 + 4,
+      rotation: Math.random() * 2160,
+      color: ['#FFD700', '#FFEA00', '#00f0ff', '#FFFFFF', '#FFFF99'][Math.floor(Math.random() * 5)]
     });
   }
 
@@ -400,19 +359,19 @@ function launchConfetti() {
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rotation * Math.PI / 180);
       ctx.fillStyle = p.color;
-      ctx.globalAlpha = 0.99;
+      ctx.globalAlpha = 0.9;
       ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
       ctx.restore();
 
       p.y += p.speed;
-      p.rotation += 15;
-      if (p.y > canvas.height) p.y = -p.size * 5;
+      p.rotation += 8;
+      if (p.y > canvas.height) p.y = -p.size * 2;
     });
     requestAnimationFrame(animate);
   }
   animate();
 
-  setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 18000);
+  setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 8000);
 }
 
 // Copiar y compartir
@@ -426,13 +385,7 @@ document.getElementById('shareXBtn').addEventListener('click', () => {
   window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
 });
 
-// Dark/Light toggle
-document.getElementById('themeToggle').addEventListener('click', () => {
-  document.body.dataset.theme = document.body.dataset.theme === 'light' ? '' : 'light';
-  document.getElementById('themeToggle').textContent = document.body.dataset.theme === 'light' ? '🌙' : '☀️';
-});
-
-// Resto del script (conecta, claim, etc.) – pega tu código funcional completo aquí
+// Resto del script funcional (pega aquí tu código completo de conexión, claim, ranking, etc.)
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);

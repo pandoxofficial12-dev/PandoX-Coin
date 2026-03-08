@@ -9,110 +9,120 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --neon-blue: #00ffff;
-      --gold-premium: #FFD700;
-      --gold-dark: #D4AF37;
+      --neon-blue: #00f0ff;
+      --gold-premium: #ffd700;
+      --gold-dark: #d4af37;
       --bg-dark: #000022;
-      --card-bg: rgba(5, 5, 40, 0.7);
+      --card-bg: rgba(8, 8, 45, 0.75);
       --text-light: #f0faff;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, var(--bg-dark) 0%, #000033 100%);
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #000044 100%);
       color: var(--text-light);
       min-height: 100vh;
-      padding: 20px 15px;
+      padding: 15px;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Fondo espacial con partículas doradas flotantes */
     body::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2000&q=80') center/cover;
       opacity: 0.12;
       z-index: -2;
+      animation: bgTwinkle 20s infinite alternate;
+    }
+
+    @keyframes bgTwinkle {
+      0%, 100% { opacity: 0.12; }
+      50% { opacity: 0.18; }
     }
 
     .particles {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       pointer-events: none;
       z-index: -1;
-      overflow: hidden;
     }
 
     .particle {
       position: absolute;
       background: var(--gold-premium);
       border-radius: 50%;
-      opacity: 0.6;
-      animation: float 15s infinite linear;
+      opacity: 0;
+      animation: particleFloat 25s infinite linear;
     }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0.2); opacity: 0.1; }
-      100% { transform: translateY(-20vh) scale(0.8); opacity: 0.8; }
+    @keyframes particleFloat {
+      0% { transform: translateY(120vh) scale(0.1); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-30vh) scale(0.6); opacity: 0; }
     }
 
     h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 3.4em;
-      color: var(--gold-premium);
-      text-shadow: 0 0 25px var(--gold-premium), 0 0 50px var(--neon-blue);
-      margin: 25px 0 15px;
-      letter-spacing: 4px;
-      animation: titlePulse 4s infinite alternate;
+      font-size: 3.6em;
+      background: linear-gradient(90deg, var(--gold-premium), var(--neon-blue), var(--gold-premium));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+      margin: 30px 0 20px;
+      letter-spacing: 5px;
       text-align: center;
+      animation: titleShine 5s infinite linear;
     }
 
-    @keyframes titlePulse {
-      from { text-shadow: 0 0 25px var(--gold-premium); }
-      to { text-shadow: 0 0 50px var(--neon-blue), 0 0 70px var(--gold-premium); }
+    @keyframes titleShine {
+      0% { background-position: -200%; }
+      100% { background-position: 200%; }
     }
 
     .logo {
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
-      border: 8px solid rgba(255, 215, 0, 0.6);
-      box-shadow: 0 0 60px var(--gold-premium), inset 0 0 30px var(--neon-blue);
+      border: 10px double var(--gold-premium);
+      box-shadow: 0 0 80px var(--gold-premium), inset 0 0 40px var(--neon-blue);
       margin: 40px auto;
       display: block;
-      animation: logoGlow 5s infinite alternate;
+      animation: logoSpinGlow 8s infinite linear;
     }
 
-    @keyframes logoGlow {
-      from { box-shadow: 0 0 60px var(--gold-premium); transform: rotate(0deg); }
-      to { box-shadow: 0 0 90px var(--neon-blue); transform: rotate(3deg); }
+    @keyframes logoSpinGlow {
+      0% { transform: rotate(0deg) scale(1); box-shadow: 0 0 80px var(--gold-premium); }
+      50% { transform: rotate(180deg) scale(1.03); box-shadow: 0 0 120px var(--neon-blue); }
+      100% { transform: rotate(360deg) scale(1); box-shadow: 0 0 80px var(--gold-premium); }
     }
 
     .section {
       background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border-radius: 30px;
-      padding: 35px 25px;
-      margin: 40px 0;
-      border: 1px solid rgba(255, 215, 0, 0.25);
-      box-shadow: 0 15px 45px rgba(0, 255, 255, 0.18);
-      transition: all 0.4s ease;
+      backdrop-filter: blur(16px);
+      border-radius: 32px;
+      padding: 40px 25px;
+      margin: 45px 0;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 255, 255, 0.2);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .section:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 25px 60px rgba(255, 215, 0, 0.3);
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(255, 215, 0, 0.35);
     }
 
     h2 {
       font-family: 'Montserrat', sans-serif;
+      font-size: 2.4em;
       color: var(--neon-blue);
-      font-size: 2.3em;
-      margin-bottom: 25px;
-      text-shadow: 0 0 15px var(--neon-blue);
+      text-shadow: 0 0 20px var(--neon-blue);
+      margin-bottom: 30px;
       text-align: center;
     }
 
@@ -123,154 +133,169 @@
       justify-content: center;
     }
 
-    .social-btn {
+    .social-btn, .earn-btn {
+      position: relative;
+      overflow: hidden;
       background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
       color: #000;
       border: none;
-      padding: 16px 38px;
+      padding: 18px 40px;
       border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.15em;
+      font-weight: 700;
+      font-size: 1.2em;
       cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.45);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
       transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
     }
 
-    .social-btn::before {
+    .social-btn::after, .earn-btn::after {
       content: '';
       position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-      transform: translateX(-100%) translateY(-100%);
-      transition: all 0.6s ease;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      pointer-events: none;
     }
 
-    .social-btn:hover::before {
-      transform: translateX(0) translateY(0);
+    .social-btn:active::after, .earn-btn:active::after {
+      width: 300px; height: 300px;
     }
 
-    .social-btn:hover {
+    .social-btn:hover, .earn-btn:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 255, 255, 0.5);
+      box-shadow: 0 15px 45px rgba(0, 255, 255, 0.6);
     }
 
     .earn-btn {
       background: linear-gradient(135deg, var(--neon-blue), var(--gold-premium));
-      color: #000;
-      border: none;
-      padding: 20px 70px;
-      border-radius: 50px;
-      font-size: 1.4em;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 10px 35px rgba(0, 255, 255, 0.55);
-      transition: all 0.4s ease;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .earn-btn::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-      transform: translateX(-100%) translateY(-100%);
-      transition: all 0.6s ease;
-    }
-
-    .earn-btn:hover::before {
-      transform: translateX(0) translateY(0);
-    }
-
-    .earn-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 55px rgba(255, 215, 0, 0.7);
+      padding: 22px 70px;
+      font-size: 1.35em;
     }
 
     .earn-btn:disabled {
-      background: linear-gradient(#444, #333);
+      background: #444;
       box-shadow: none;
-      color: #777;
-      cursor: not-allowed;
+      color: #888;
     }
 
     #status {
-      margin: 35px 0;
-      font-size: 1.5em;
+      margin: 40px 0;
+      font-size: 1.6em;
       color: var(--gold-premium);
-      text-shadow: 0 0 15px var(--gold-premium);
+      text-shadow: 0 0 20px var(--gold-premium);
       font-weight: 500;
       text-align: center;
     }
 
     .subtitle {
-      font-size: 1.6em;
+      font-size: 1.7em;
       color: var(--text-light);
-      margin: 20px 0;
-      opacity: 0.92;
+      margin: 25px 0;
       text-align: center;
+      opacity: 0.95;
     }
 
     #ranking {
-      background: rgba(0, 0, 0, 0.65);
-      border-radius: 22px;
-      padding: 28px;
+      display: grid;
+      gap: 15px;
       margin-top: 40px;
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      box-shadow: 0 10px 35px rgba(0, 255, 255, 0.25);
-      animation: fadeIn 1.8s ease-out;
+    }
+
+    .rank-card {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      padding: 18px;
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .rank-card:nth-child(1) { animation-delay: 0.1s; }
+    .rank-card:nth-child(2) { animation-delay: 0.2s; }
+    .rank-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rank-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+    }
+
+    .rank-position {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: var(--gold-premium);
+      margin-bottom: 8px;
     }
 
     #nextClaim {
-      font-size: 1.45em;
+      font-size: 1.5em;
       color: var(--gold-premium);
-      margin: 20px 0;
+      margin: 25px 0;
       font-weight: bold;
       text-align: center;
     }
 
     #referralSection {
-      margin: 30px 0;
+      margin: 35px 0;
       text-align: center;
     }
 
     #referralInput {
       width: 100%;
-      max-width: 360px;
+      max-width: 380px;
       padding: 18px;
       border-radius: 50px;
       border: 2px solid var(--gold-premium);
-      background: rgba(5, 5, 40, 0.85);
+      background: rgba(5, 5, 40, 0.9);
       color: white;
-      font-size: 1.25em;
+      font-size: 1.3em;
       text-align: center;
-      box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.25);
+      box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    #copyReferralBtn {
+      margin-top: 15px;
+      background: var(--gold-premium);
+      color: #000;
+      padding: 14px 40px;
+      border-radius: 50px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
     }
 
     #disconnectBtn {
-      background: linear-gradient(#ff4444, #aa0000);
+      background: linear-gradient(#ff4444, #cc0000);
       color: white;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
 
   <div class="particles" id="particles"></div>
+  <canvas id="confetti"></canvas>
 
   <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX Logo" class="logo">
 
   <h1>PandoX</h1>
-  <p class="subtitle">Conecta, reclama PDX cada 6 horas e invita amigos</p>
+  <p class="subtitle">Conecta tu wallet • Reclama cada 6 horas • Invita y gana</p>
 
   <div class="section">
     <h2>Comunidad PandoX</h2>
@@ -285,43 +310,91 @@
   <div class="section">
     <h2>Gana PDX</h2>
     <div id="referralSection">
-      <p>Wallet de referido (opcional - bonus para ambos)</p>
+      <p>Ingresa wallet de referido (opcional - bonus mutuo)</p>
       <input type="text" id="referralInput" placeholder="0x...">
+      <button id="copyReferralBtn" style="display:none;">Copiar mi código de referido</button>
     </div>
     <button id="subscribeBtn" class="earn-btn">Conectar Wallet</button>
     <button id="claimBtn" class="earn-btn" disabled>Reclamar PDX</button>
     <button id="viewBalanceBtn" class="earn-btn" disabled>Ver Saldo / Posición</button>
     <button id="disconnectBtn" class="earn-btn" style="display:none;">Desconectar Wallet</button>
-    <div id="status">Abre en World App para comenzar</div>
+    <div id="status">Abre en World App para empezar</div>
     <div id="nextClaim"></div>
     <div id="ranking"><b>Ranking Top 10</b><br>Cargando...</div>
   </div>
 
 <script>
-  // PARTÍCULAS DORADAS FLOTANTES
-  function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      const size = Math.random() * 4 + 2;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.left = `${Math.random() * 100}vw`;
-      particle.style.animationDelay = `${Math.random() * 15}s`;
-      particle.style.animationDuration = `${Math.random() * 20 + 20}s`;
-      particlesContainer.appendChild(particle);
-    }
+// Partículas doradas flotantes
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 40; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 5 + 2;
+    particle.style.width = particle.style.height = size + 'px';
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = Math.random() * 30 + 30 + 's';
+    container.appendChild(particle);
   }
-  createParticles();
+}
+createParticles();
 
-  // Resto del script (funcionalidad) - copia aquí tu script anterior completo
-  const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
-  const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+// Confeti dorado al claim exitoso
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  // ... (pega aquí todo el <script> funcional que tenías antes: variables, updateRanking, checkOrCreateUser, onclicks, etc.)
-  // Si lo necesitas de nuevo, dime y te lo agrego completo.
+  const particles = [];
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 8 + 4,
+      speed: Math.random() * 5 + 2,
+      rotation: Math.random() * 360,
+      color: ['#FFD700', '#FFEA00', '#FFFF99'][Math.floor(Math.random() * 3)]
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.8;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+
+      p.y += p.speed;
+      p.rotation += 2;
+      if (p.y > canvas.height) p.y = -p.size;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 5000);
+}
+
+// Copiar código de referido
+document.getElementById('copyReferralBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(walletAddress || 'Conecta primero');
+  alert('¡Código copiado! Comparte tu wallet: ' + walletAddress);
+});
+
+// Resto del script funcional (pega aquí tu código anterior completo de conexión, claim, ranking, etc.)
+// Ejemplo mínimo (agrega el tuyo completo):
+const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
+const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+// ... (tu código completo de variables, funciones, onclicks, etc.)
+// Cuando reclames con éxito, llama a launchConfetti();
 </script>
 </body>
 </html>

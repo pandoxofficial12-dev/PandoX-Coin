@@ -72,18 +72,35 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 1s;
+      transition: opacity 1s ease-out;
+    }
+
+    #splash .logo-container {
+      margin-bottom: 20px;
+    }
+
+    #splash img.logo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 10px double var(--gold-premium);
+      box-shadow: 0 0 80px var(--gold-premium);
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
     }
 
     #splash h2 {
       color: var(--gold-premium);
-      font-size: 2.5em;
-      margin-top: 20px;
+      font-size: 2.2em;
+      margin: 10px 0;
     }
 
     #splash p {
       color: var(--text-light);
-      margin-top: 10px;
       font-size: 1.2em;
     }
 
@@ -159,7 +176,7 @@
       justify-content: center;
     }
 
-    .social-btn, .earn-btn, #copyReferralBtn, #shareXBtn, #playPractice, #playPaid {
+    .social-btn, .earn-btn, #copyReferralBtn, #shareXBtn {
       background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
       color: #000;
       border: none;
@@ -174,7 +191,7 @@
       overflow: hidden;
     }
 
-    .social-btn::after, .earn-btn::after, #copyReferralBtn::after, #shareXBtn::after, #playPractice::after, #playPaid::after {
+    .social-btn::after, .earn-btn::after, #copyReferralBtn::after, #shareXBtn::after {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
@@ -185,11 +202,11 @@
       transition: width 0.8s ease, height 0.8s ease;
     }
 
-    .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after, #shareXBtn:active::after, #playPractice:active::after, #playPaid:active::after {
+    .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after, #shareXBtn:active::after {
       width: 400px; height: 400px;
     }
 
-    .social-btn:hover, .earn-btn:hover, #copyReferralBtn:hover, #shareXBtn:hover, #playPractice:hover, #playPaid:hover {
+    .social-btn:hover, .earn-btn:hover, #copyReferralBtn:hover, #shareXBtn:hover {
       transform: translateY(-5px);
       box-shadow: 0 20px 60px rgba(0, 255, 255, 0.7);
     }
@@ -221,30 +238,6 @@
       margin: 30px 0;
       font-weight: bold;
       text-align: center;
-    }
-
-    #progressContainer {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      margin: 30px auto;
-    }
-
-    #progressCircle {
-      fill: none;
-      stroke: var(--gold-premium);
-      stroke-width: 12;
-      stroke-dasharray: 339;
-      stroke-dashoffset: 339;
-      transform: rotate(-90deg);
-      transition: stroke-dashoffset 0.5s ease;
-    }
-
-    #fomo {
-      text-align: center;
-      font-size: 1.3em;
-      color: var(--gold-premium);
-      margin-top: 20px;
     }
 
     #referralSection {
@@ -296,18 +289,17 @@
       border: 1px solid rgba(255, 215, 0, 0.6);
       box-shadow: 0 15px 60px rgba(0, 255, 255, 0.4);
       transition: all 0.6s ease;
-      animation: bounceIn 0.8s ease-out forwards;
+      animation: fadeInUp 1.5s ease-out forwards;
       opacity: 0;
     }
 
-    .rank-card:nth-child(1) { animation-delay: 0.2s; }
-    .rank-card:nth-child(2) { animation-delay: 0.4s; }
-    .rank-card:nth-child(3) { animation-delay: 0.6s; }
+    .rank-card:nth-child(1) { animation-delay: 0.4s; }
+    .rank-card:nth-child(2) { animation-delay: 0.8s; }
+    .rank-card:nth-child(3) { animation-delay: 1.2s; }
 
-    @keyframes bounceIn {
-      0% { opacity: 0; transform: scale(0.8); }
-      60% { opacity: 1; transform: scale(1.05); }
-      100% { transform: scale(1); }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .rank-card:hover {
@@ -323,59 +315,11 @@
     }
 
     .medal { font-size: 2em; margin-left: 15px; }
-
-    #connectMsg {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3em;
-      color: var(--gold-premium);
-      text-shadow: 0 0 50px var(--gold-premium);
-      opacity: 0;
-      transition: opacity 1s, transform 1s;
-      z-index: 9998;
-      pointer-events: none;
-    }
-
-    #gameSection {
-      margin: 50px 0;
-      text-align: center;
-    }
-
-    #gameCanvas {
-      width: 100%;
-      height: 300px;
-      background: #000033;
-      border-radius: 20px;
-      margin-top: 20px;
-      border: 2px solid var(--gold-premium);
-    }
-
-    #gameScore {
-      font-size: 1.8em;
-      margin-top: 20px;
-      color: var(--gold-premium);
-    }
-
-    #gameMessage {
-      font-size: 1.2em;
-      color: var(--text-light);
-      margin-top: 10px;
-    }
-
-    canvas#confetti {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Splash loading -->
+  <!-- Splash screen seguro -->
   <div id="splash">
     <div class="logo-container">
       <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
@@ -386,7 +330,6 @@
 
   <div class="particles" id="particles"></div>
   <canvas id="confetti"></canvas>
-  <div id="connectMsg">¡Wallet Conectada!</div>
 
   <div class="logo-container">
     <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX Logo" class="logo">
@@ -418,37 +361,25 @@
     <button id="viewBalanceBtn" class="earn-btn" disabled>Ver Saldo / Posición</button>
     <button id="disconnectBtn" class="earn-btn" style="display:none;">Desconectar Wallet</button>
     <div id="status">Abre en World App para empezar</div>
-    <div id="progressContainer">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="54" fill="none" stroke="#333" stroke-width="12" />
-        <circle id="progressCircle" cx="60" cy="60" r="54" fill="none" stroke="var(--gold-premium)" stroke-width="12" stroke-dasharray="339" stroke-dashoffset="339" transform="rotate(-90 60 60)" />
-      </svg>
-      <div id="nextClaim"></div>
-    </div>
-    <p id="fomo">¡+1,234 pandas ya están ganando PDX hoy! Únete al movimiento 🐼🚀</p>
+    <div id="nextClaim"></div>
     <div id="ranking"><b>Ranking Top 10</b><br>Cargando...</div>
   </div>
 
-  <div class="section" id="gameSection" style="display:none;">
-    <h2>Panda Runner</h2>
-    <p>Práctica gratis o paga 0.5 WLD para competir por rewards semanales</p>
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-      <button id="playPractice" class="earn-btn">Practicar (gratis)</button>
-      <button id="playPaid" class="earn-btn">Competir (0.5 WLD)</button>
-    </div>
-    <canvas id="gameCanvas" style="width:100%; height:300px; background:#000033; border-radius:20px; margin-top:20px;"></canvas>
-    <p id="gameScore">Score: 0</p>
-    <p id="gameMessage">Toca la pantalla para saltar</p>
-  </div>
-
 <script>
-// Splash loading
-setTimeout(() => {
-  document.getElementById('splash').style.opacity = '0';
-  setTimeout(() => document.getElementById('splash').style.display = 'none', 1000);
-}, 3000);
+// Splash screen seguro (ejecuta después de carga completa)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) {
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        if (splash) splash.style.display = 'none';
+      }, 1000);
+    }
+  }, 4000); // 4 segundos para dar margen
+});
 
-// Partículas
+// Partículas doradas y neón
 function createParticles() {
   const container = document.getElementById('particles');
   for (let i = 0; i < 100; i++) {
@@ -506,29 +437,6 @@ function launchConfetti() {
   setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 8000);
 }
 
-// Animación al conectar wallet
-function showConnectAnimation() {
-  const msg = document.getElementById('connectMsg');
-  msg.style.opacity = '1';
-  msg.style.transform = 'translate(-50%, -50%) scale(1.2)';
-  setTimeout(() => {
-    msg.style.opacity = '0';
-    msg.style.transform = 'translate(-50%, -50%) scale(0)';
-  }, 2500);
-}
-
-// Barra de progreso para claim
-function updateProgressCircle(remainMs, totalMs) {
-  const progress = (remainMs / totalMs) * 339;
-  document.getElementById('progressCircle').style.strokeDashoffset = progress;
-}
-
-// FOMO contador simulado
-setInterval(() => {
-  const randomUsers = Math.floor(Math.random() * 500) + 1000;
-  document.getElementById('fomo').textContent = `¡+${randomUsers} pandas ya están ganando PDX hoy! Únete al movimiento 🐼🚀`;
-}, 15000);
-
 // Copiar y compartir
 document.getElementById('copyReferralBtn').addEventListener('click', () => {
   navigator.clipboard.writeText(walletAddress || 'Conecta primero');
@@ -540,138 +448,6 @@ document.getElementById('shareXBtn').addEventListener('click', () => {
   window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
 });
 
-// Juego Panda Runner
-const gameCanvas = document.getElementById('gameCanvas');
-const gameCtx = gameCanvas.getContext('2d');
-gameCanvas.width = gameCanvas.offsetWidth;
-gameCanvas.height = 300;
-
-let player = { x: 80, y: 200, width: 80, height: 80, velocity: 0, gravity: 0.6, jumpPower: -14, jumping: false };
-let obstacles = [];
-let coins = [];
-let score = 0;
-let gameRunning = false;
-let pandaImg = new Image();
-pandaImg.src = 'https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png';
-
-function startGame(paid = false) {
-  if (paid && !walletAddress) {
-    alert('Conecta tu wallet primero para competir');
-    return;
-  }
-
-  if (paid) {
-    MiniKit.commandsAsync.pay({
-      tokens: [{ amount: '0.5', tokenAddress: 'WORLDCOIN_ADDRESS_HERE' }]
-    }).then(() => {
-      alert('¡Pago confirmado! Buena suerte');
-      runGame();
-    }).catch(() => alert('Pago cancelado'));
-  } else {
-    alert('Modo práctica: ¡Diviértete!');
-    runGame();
-  }
-}
-
-function runGame() {
-  gameRunning = true;
-  score = 0;
-  player.y = 200;
-  player.velocity = 0;
-  obstacles = [];
-  coins = [];
-  document.getElementById('gameSection').style.display = 'block';
-  document.getElementById('gameScore').textContent = 'Score: 0';
-  document.getElementById('gameMessage').textContent = 'Toca la pantalla para saltar';
-  animateGame();
-}
-
-function animateGame() {
-  if (!gameRunning) return;
-
-  gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-  // Panda
-  if (pandaImg.complete) {
-    gameCtx.drawImage(pandaImg, player.x, player.y, player.width, player.height);
-  } else {
-    gameCtx.fillStyle = '#fff';
-    gameCtx.fillRect(player.x, player.y, player.width, player.height);
-  }
-
-  // Suelo
-  gameCtx.fillStyle = '#111133';
-  gameCtx.fillRect(0, 250, gameCanvas.width, 50);
-
-  // Obstáculos
-  obstacles.forEach((obs, i) => {
-    obs.x -= 5;
-    gameCtx.fillStyle = '#ff4444';
-    gameCtx.beginPath();
-    gameCtx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.width/2, 0, Math.PI*2);
-    gameCtx.fill();
-
-    if (obs.x < player.x + player.width && obs.x + obs.width > player.x &&
-        obs.y < player.y + player.height && obs.y + obs.height > player.y) {
-      gameOver();
-    }
-
-    if (obs.x + obs.width < 0) obstacles.splice(i, 1);
-  });
-
-  // Monedas
-  coins.forEach((coin, i) => {
-    coin.x -= 5;
-    gameCtx.fillStyle = var(--gold-premium);
-    gameCtx.beginPath();
-    gameCtx.arc(coin.x + coin.width/2, coin.y + coin.height/2, coin.width/2, 0, Math.PI*2);
-    gameCtx.fill();
-    gameCtx.fillStyle = '#000';
-    gameCtx.font = '20px Montserrat';
-    gameCtx.fillText('P', coin.x + coin.width/2 - 8, coin.y + coin.height/2 + 8);
-
-    if (coin.x < player.x + player.width && coin.x + coin.width > player.x &&
-        coin.y < player.y + player.height && coin.y + coin.height > player.y) {
-      score += 50;
-      coins.splice(i, 1);
-      document.getElementById('gameScore').textContent = `Score: ${score}`;
-    }
-
-    if (coin.x + coin.width < 0) coins.splice(i, 1);
-  });
-
-  player.velocity += player.gravity;
-  player.y += player.velocity;
-
-  if (player.y > 220) {
-    player.y = 220;
-    player.velocity = 0;
-    player.jumping = false;
-  }
-
-  score += 1;
-  document.getElementById('gameScore').textContent = `Score: ${score}`;
-
-  requestAnimationFrame(animateGame);
-}
-
-function gameOver() {
-  gameRunning = false;
-  alert(`¡Game Over! Tu score: ${score}\nMejora en modo práctica o compite por rewards`);
-}
-
-// Eventos
-gameCanvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  if (gameRunning && !player.jumping) {
-    player.velocity = player.jumpPower;
-    player.jumping = true;
-  }
-});
-
-document.getElementById('playPractice').addEventListener('click', () => startGame(false));
-document.getElementById('playPaid').addEventListener('click', () => startGame(true));
-
 // Resto del script funcional (pega aquí tu código completo de conexión, claim, ranking, etc.)
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
@@ -679,7 +455,6 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 // ... (tu código completo de variables, funciones, onclicks, etc.)
 // Cuando reclames con éxito: launchConfetti();
-// Al conectar wallet: showConnectAnimation();
 </script>
 </body>
 </html>

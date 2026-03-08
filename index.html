@@ -179,4 +179,266 @@
 
     .social-btn:hover, .earn-btn:hover, #copyReferralBtn:hover, #shareXBtn:hover {
       transform: translateY(-15px);
-      box-shadow: 0 60px 180px rgba(0, 255,
+      box-shadow: 0 60px 180px rgba(0, 255, 255, 1);
+    }
+
+    .earn-btn {
+      background: linear-gradient(135deg, var(--neon-blue), var(--gold-premium));
+      padding: 32px 130px;
+      font-size: 1.7em;
+    }
+
+    .earn-btn:disabled {
+      background: #444;
+      box-shadow: none;
+      color: #888;
+    }
+
+    #status {
+      margin: 80px 0;
+      font-size: 2.2em;
+      color: var(--gold-premium);
+      text-shadow: 0 0 50px var(--gold-premium);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 2.4em;
+      color: var(--text-light);
+      margin: 60px 0;
+      text-align: center;
+      opacity: 0.98;
+    }
+
+    #ranking {
+      display: grid;
+      gap: 50px;
+      margin-top: 80px;
+    }
+
+    .rank-card {
+      background: rgba(0, 0, 0, 0.95);
+      border-radius: 44px;
+      padding: 50px;
+      border: 1px solid rgba(255, 215, 0, 0.8);
+      box-shadow: 0 25px 100px rgba(0, 255, 255, 0.6);
+      transition: all 0.9s ease;
+      animation: fadeInUp 2.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .rank-card:nth-child(1) { animation-delay: 0.8s; }
+    .rank-card:nth-child(2) { animation-delay: 1.5s; }
+    .rank-card:nth-child(3) { animation-delay: 2.2s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(100px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rank-card:hover {
+      transform: translateY(-25px);
+      box-shadow: 0 80px 240px rgba(255, 215, 0, 1);
+    }
+
+    .rank-position {
+      font-size: 3.5em;
+      font-weight: bold;
+      color: var(--gold-premium);
+      margin-bottom: 25px;
+    }
+
+    .medal { font-size: 3em; margin-left: 25px; }
+
+    #nextClaim {
+      font-size: 2.2em;
+      color: var(--gold-premium);
+      margin: 60px 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #referralSection {
+      margin: 70px 0;
+      text-align: center;
+    }
+
+    #referralInput {
+      width: 100%;
+      max-width: 500px;
+      padding: 32px;
+      border-radius: 50px;
+      border: 2px solid var(--gold-premium);
+      background: rgba(5, 5, 40, 0.99);
+      color: white;
+      font-size: 1.6em;
+      text-align: center;
+      box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.6);
+    }
+
+    #copyReferralBtn, #shareXBtn {
+      margin-top: 40px;
+      background: var(--gold-premium);
+      color: #000;
+      padding: 28px 100px;
+      border-radius: 50px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 20px 80px rgba(255, 215, 0, 1);
+    }
+
+    #disconnectBtn {
+      background: linear-gradient(#ff4444, #cc0000);
+      color: white;
+    }
+
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.25);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      font-size: 2em;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      z-index: 1000;
+    }
+
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="themeToggle">☀️</button>
+  <div class="particles" id="particles"></div>
+  <canvas id="confetti"></canvas>
+
+  <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX Logo" class="logo">
+
+  <h1>PandoX</h1>
+  <p class="subtitle">Conecta tu wallet • Reclama cada 6 horas • Invita y domina</p>
+
+  <div class="section">
+    <h2>Comunidad PandoX</h2>
+    <div class="buttons">
+      <a href="https://x.com/pandoxofficial" target="_blank" class="social-btn">X Oficial</a>
+      <a href="https://t.me/pandoxofficial" target="_blank" class="social-btn">Telegram Grupo</a>
+      <a href="https://t.me/pandoxchannel" target="_blank" class="social-btn">Canal Telegram</a>
+      <a href="https://worldscan.org/address/0xF968341A687D70BcF84121111CfBB5eF7148AC28" target="_blank" class="social-btn">Contrato PDX</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Gana PDX</h2>
+    <div id="referralSection">
+      <p>Ingresa wallet de referido (opcional - bonus mutuo)</p>
+      <input type="text" id="referralInput" placeholder="0x...">
+      <button id="copyReferralBtn" style="display:none;">Copiar mi código</button>
+      <button id="shareXBtn" style="display:none;">Compartir en X</button>
+    </div>
+    <button id="subscribeBtn" class="earn-btn">Conectar Wallet</button>
+    <button id="claimBtn" class="earn-btn" disabled>Reclamar PDX</button>
+    <button id="viewBalanceBtn" class="earn-btn" disabled>Ver Saldo / Posición</button>
+    <button id="disconnectBtn" class="earn-btn" style="display:none;">Desconectar Wallet</button>
+    <div id="status">Abre en World App para empezar</div>
+    <div id="nextClaim"></div>
+    <div id="ranking"><b>Ranking Top 10</b><br>Cargando...</div>
+  </div>
+
+<script>
+// Partículas máximas
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 200; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    if (i % 2 === 0) particle.classList.add('neon');
+    const size = Math.random() * 12 + 5;
+    particle.style.width = particle.style.height = size + 'px';
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.animationDelay = Math.random() * 60 + 's';
+    particle.style.animationDuration = Math.random() * 90 + 90 + 's';
+    container.appendChild(particle);
+  }
+}
+createParticles();
+
+// Confeti máximo
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  for (let i = 0; i < 600; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 20 + 10,
+      speed: Math.random() * 16 + 8,
+      rotation: Math.random() * 2880,
+      color: ['#FFD700', '#FFEA00', '#00f0ff', '#FFFFFF', '#FFFF99', '#FFAA00', '#D4AF37', '#C0C0C0', '#FF69B4'][Math.floor(Math.random() * 9)]
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.99;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+
+      p.y += p.speed;
+      p.rotation += 15;
+      if (p.y > canvas.height) p.y = -p.size * 5;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 18000);
+}
+
+// Copiar y compartir
+document.getElementById('copyReferralBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(walletAddress || 'Conecta primero');
+  alert('¡Código copiado!');
+});
+
+document.getElementById('shareXBtn').addEventListener('click', () => {
+  const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Earn-Official-/`;
+  window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+});
+
+// Dark/Light toggle
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.dataset.theme = document.body.dataset.theme === 'light' ? '' : 'light';
+  document.getElementById('themeToggle').textContent = document.body.dataset.theme === 'light' ? '🌙' : '☀️';
+});
+
+// Resto del script (conecta, claim, etc.) – pega tu código funcional completo aquí
+const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
+const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+// ... (tu código completo de variables, funciones, onclicks, etc.)
+// Cuando reclames con éxito: launchConfetti();
+</script>
+</body>
+</html>

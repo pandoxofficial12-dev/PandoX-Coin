@@ -66,22 +66,31 @@
     #splash {
       position: fixed;
       inset: 0;
-      background: var(--bg-dark);
-      z-index: 9999;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--bg-dark); /* Fondo consistente con la app */
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      transition: opacity 1s ease-out;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease-out; /* Fade-out suave */
+      opacity: 1; /* Inicialmente visible */
+    }
+
+    #splash.hidden {
+      opacity: 0;
+      pointer-events: none; /* Evita interacciones después de fade */
     }
 
     #splash .logo-container {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     #splash img.logo {
-      width: 150px; /* Tamaño reducido para que no se vea gigante */
-      height: 150px;
+      width: auto;
+      max-width: 180px; /* Tamaño responsivo, no gigante */
+      height: auto;
       border-radius: 50%;
       border: 10px double var(--gold-premium);
       box-shadow: 0 0 80px var(--gold-premium);
@@ -345,7 +354,7 @@
 </head>
 <body>
 
-  <!-- Splash screen ultra-seguro -->
+  <!-- Nuevo Splash screen desde cero: fullscreen, responsivo, fade suave, timeout fijo -->
   <div id="splash">
     <div class="logo-container">
       <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
@@ -404,30 +413,43 @@
   </div>
 
 <script>
-// Splash ultra-seguro: chequea cada 300ms y fuerza desaparición si pasa 5s
-function hideSplash() {
+// Nuevo código de Splash desde cero: timeout fijo de 3s, verificación inicial, fade suave, sin leaks
+document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
-  if (splash) {
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      if (splash) splash.style.display = 'none';
-    }, 800);
+  if (!splash) {
+    console.warn('Splash no encontrado. Saltando...');
+    return;
   }
-}
 
-let splashCheckCount = 0;
-const splashCheckInterval = setInterval(() => {
-  splashCheckCount++;
-  const splash = document.getElementById('splash');
-  if (splash) {
-    clearInterval(splashCheckInterval);
-    setTimeout(hideSplash, 3000); // 3 segundos visibles
+  // Instalación temprana de MiniKit (si aplica, para no interferir con splash)
+  if (typeof MiniKit !== 'undefined' && MiniKit.install) {
+    try {
+      MiniKit.install();
+      console.log('[MiniKit] Instalado correctamente');
+    } catch (err) {
+      console.error('[MiniKit] Error al instalar:', err);
+    }
   }
-  if (splashCheckCount >= 16) { // \~5 segundos máximo
-    clearInterval(splashCheckInterval);
-    hideSplash();
+
+  // Timeout fijo: 3000ms (3s), máximo 4s si demora
+  const splashTimer = setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => {
+      splash.style.display = 'none'; // Elimina completamente del DOM flow
+      splash.remove(); // Remueve para liberar memoria
+    }, 600); // Espera fade-out
+  }, 3000); // Cambia a 4000 para 4s máximo
+
+  // Verificación de carga: si ya cargó todo, fuerza hide temprano (opcional, para optimizar)
+  if (document.readyState === 'complete') {
+    clearTimeout(splashTimer);
+    splash.classList.add('hidden');
+    setTimeout(() => {
+      splash.style.display = 'none';
+      splash.remove();
+    }, 600);
   }
-}, 300);
+});
 
 // Partículas doradas y neón
 function createParticles() {
@@ -459,7 +481,7 @@ function launchConfetti() {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height - canvas.height,
       size: Math.random() * 12 + 6,
-      speed: Math.random() * 8 + 4;
+      speed: Math.random() * 8 + 4,
       rotation: Math.random() * 2160,
       color: ['#FFD700', '#FFEA00', '#00f0ff', '#FFFFFF', '#FFFF99'][Math.floor(Math.random() * 5)]
     });
@@ -644,4 +666,4 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 // Cuando reclames con éxito: launchConfetti();
 </script>
 </body>
-</html>
+  </html>

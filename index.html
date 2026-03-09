@@ -345,10 +345,10 @@
 </head>
 <body>
 
-  <!-- Splash screen corregido (versión ultra-segura) -->
+  <!-- Splash screen ultra-seguro (nunca se queda atascado) -->
   <div id="splash">
     <div class="logo-container">
-      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo" id="splashLogo">
+      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" id="splashLogo">
     </div>
     <h2>Bienvenido a PandoX</h2>
     <p>Conectando el universo PDX...</p>
@@ -404,30 +404,30 @@
   </div>
 
 <script>
-// Splash screen ultra-seguro (chequea cada 500ms y fuerza desaparición si pasa 10s)
+// Splash ultra-seguro: chequea cada 300ms y fuerza desaparición si pasa 5s
 function hideSplash() {
   const splash = document.getElementById('splash');
   if (splash) {
     splash.style.opacity = '0';
     setTimeout(() => {
       if (splash) splash.style.display = 'none';
-    }, 1000);
+    }, 800);
   }
 }
 
-const splashInterval = setInterval(() => {
+let splashCheckCount = 0;
+const splashCheckInterval = setInterval(() => {
+  splashCheckCount++;
   const splashLogo = document.getElementById('splashLogo');
   if (splashLogo && splashLogo.complete) {
-    clearInterval(splashInterval);
-    setTimeout(hideSplash, 2000); // 2 segundos después de que la imagen cargue
+    clearInterval(splashCheckInterval);
+    setTimeout(hideSplash, 3000); // 3 segundos visibles
   }
-}, 500);
-
-// Fuerza desaparición después de 10 segundos máximo
-setTimeout(() => {
-  clearInterval(splashInterval);
-  hideSplash();
-}, 10000);
+  if (splashCheckCount >= 16) { // \~5 segundos máximo
+    clearInterval(splashCheckInterval);
+    hideSplash();
+  }
+}, 300);
 
 // Partículas doradas y neón
 function createParticles() {
@@ -542,7 +542,6 @@ function runGame() {
   document.getElementById('gameScore').textContent = 'Score: 0';
   document.getElementById('gameMessage').textContent = 'Toca la pantalla para saltar';
 
-  // Generar obstáculos y monedas
   setInterval(() => {
     if (gameRunning && Math.random() < 0.03) {
       obstacles.push({ x: gameCanvas.width, y: 220 + Math.random() * 30, width: 50, height: 50 });
@@ -560,7 +559,6 @@ function animateGame() {
 
   gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-  // Panda (tu logo)
   if (pandaImg.complete) {
     gameCtx.drawImage(pandaImg, player.x, player.y, player.width, player.height);
   } else {
@@ -568,11 +566,9 @@ function animateGame() {
     gameCtx.fillRect(player.x, player.y, player.width, player.height);
   }
 
-  // Suelo
   gameCtx.fillStyle = '#111133';
   gameCtx.fillRect(0, 250, gameCanvas.width, 50);
 
-  // Obstáculos
   obstacles.forEach((obs, i) => {
     obs.x -= 5;
     gameCtx.fillStyle = '#ff4444';
@@ -588,7 +584,6 @@ function animateGame() {
     if (obs.x + obs.width < 0) obstacles.splice(i, 1);
   });
 
-  // Monedas PDX
   coins.forEach((coin, i) => {
     coin.x -= 5;
     gameCtx.fillStyle = var(--gold-premium);
@@ -629,7 +624,6 @@ function gameOver() {
   alert(`¡Game Over! Tu score: ${score}\nMejora en modo práctica o compite por rewards`);
 }
 
-// Eventos del juego
 gameCanvas.addEventListener('touchstart', (e) => {
   e.preventDefault();
   if (gameRunning && !player.jumping) {
@@ -641,7 +635,7 @@ gameCanvas.addEventListener('touchstart', (e) => {
 document.getElementById('playPractice').addEventListener('click', () => startGame(false));
 document.getElementById('playPaid').addEventListener('click', () => startGame(true));
 
-// Tu lógica original (conexión, claim, ranking, etc.) - intacta
+// Tu lógica original (conexión, claim, ranking, etc.) - intacta del repo principal
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);

@@ -345,10 +345,10 @@
 </head>
 <body>
 
-  <!-- Splash screen corregido y seguro -->
+  <!-- Splash screen corregido (versión ultra-segura) -->
   <div id="splash">
     <div class="logo-container">
-      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
+      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo" id="splashLogo">
     </div>
     <h2>Bienvenido a PandoX</h2>
     <p>Conectando el universo PDX...</p>
@@ -404,18 +404,30 @@
   </div>
 
 <script>
-// Splash screen corregido y seguro (espera carga completa)
-window.addEventListener('load', () => {
+// Splash screen ultra-seguro (chequea cada 500ms y fuerza desaparición si pasa 10s)
+function hideSplash() {
   const splash = document.getElementById('splash');
-  if (!splash) return; // Seguridad si no existe
-
-  setTimeout(() => {
+  if (splash) {
     splash.style.opacity = '0';
     setTimeout(() => {
-      splash.style.display = 'none';
+      if (splash) splash.style.display = 'none';
     }, 1000);
-  }, 4000); // 4 segundos
-});
+  }
+}
+
+const splashInterval = setInterval(() => {
+  const splashLogo = document.getElementById('splashLogo');
+  if (splashLogo && splashLogo.complete) {
+    clearInterval(splashInterval);
+    setTimeout(hideSplash, 2000); // 2 segundos después de que la imagen cargue
+  }
+}, 500);
+
+// Fuerza desaparición después de 10 segundos máximo
+setTimeout(() => {
+  clearInterval(splashInterval);
+  hideSplash();
+}, 10000);
 
 // Partículas doradas y neón
 function createParticles() {
@@ -629,12 +641,12 @@ gameCanvas.addEventListener('touchstart', (e) => {
 document.getElementById('playPractice').addEventListener('click', () => startGame(false));
 document.getElementById('playPaid').addEventListener('click', () => startGame(true));
 
-// Tu lógica original (conexión, claim, ranking, etc.) - ya incluida en el HTML que me pasaste
+// Tu lógica original (conexión, claim, ranking, etc.) - intacta
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Aquí está tu código original completo que me pasaste (conexión, claim, ranking, etc.)
+// ... (tu código completo de variables, funciones, onclicks, etc.)
 // Cuando reclames con éxito: launchConfetti();
 </script>
 </body>

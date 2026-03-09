@@ -63,6 +63,7 @@
       100% { transform: translateY(-100vh) scale(0.4) rotate(2160deg); opacity: 0; }
     }
 
+    /* Splash con CSS puro - desaparece automáticamente en 3.5s */
     #splash {
       position: fixed;
       inset: 0;
@@ -74,8 +75,18 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.8s ease-out;
-      opacity: 1;
+      animation: fadeOutSplash 3.5s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fadeOutSplash {
+      0%   { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    #splash .logo-container {
+      margin-bottom: 20px;
     }
 
     #splash img.logo {
@@ -104,6 +115,7 @@
       font-size: 1.2em;
     }
 
+    /* Resto de estilos sin cambios */
     .logo-container {
       text-align: center;
       margin: 30px 0 50px;
@@ -345,7 +357,7 @@
 </head>
 <body>
 
-  <!-- Splash -->
+  <!-- Splash con CSS puro - desaparece solo en 3.5s -->
   <div id="splash">
     <div class="logo-container">
       <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
@@ -405,56 +417,9 @@
   </div>
 
 <script>
-// Splash - versión ultra-resistente (IIFE inmediato + interval chequeo + fallback múltiple)
-(function secureSplashHide() {
-  const maxAttempts = 10; // Máximo 5 segundos de chequeo
-  let attempts = 0;
+// No hay JS para el splash - ya se maneja con CSS
 
-  function tryHideSplash() {
-    attempts++;
-    const splash = document.getElementById('splash');
-    if (!splash) {
-      if (attempts >= maxAttempts) {
-        console.log('[Splash] No encontrado después de múltiples intentos - asumiendo carga sin splash');
-      }
-      return;
-    }
-
-    console.log('[Splash] Encontrado en intento ' + attempts + ' - ocultando ahora');
-
-    splash.style.transition = 'opacity 0.8s ease-out';
-    splash.style.opacity = '0';
-
-    setTimeout(() => {
-      splash.style.display = 'none';
-      if (splash.parentNode) splash.parentNode.removeChild(splash);
-      console.log('[Splash] Ocultado y removido con éxito');
-    }, 900);
-
-    // Detener interval si se ocultó
-    clearInterval(splashInterval);
-  }
-
-  // Chequeo inmediato y cada 500ms
-  tryHideSplash();
-  const splashInterval = setInterval(tryHideSplash, 500);
-
-  // Fallback final a los 6 segundos
-  setTimeout(() => {
-    clearInterval(splashInterval);
-    const splash = document.getElementById('splash');
-    if (splash) {
-      console.log('[Splash] Fallback final activado - ocultando forzado');
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-        splash.remove();
-      }, 900);
-    }
-  }, 6000);
-})();
-
-// MiniKit install
+// MiniKit install (temprano y seguro)
 if (typeof MiniKit !== 'undefined' && MiniKit.install) {
   try {
     MiniKit.install();
@@ -521,22 +486,24 @@ function launchConfetti() {
   setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 8000);
 }
 
-// Eventos botones
-const copyBtn = document.getElementById('copyReferralBtn');
-if (copyBtn) {
-  copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(walletAddress || 'Conecta primero');
-    alert('¡Código copiado!');
-  });
-}
+// Eventos botones (seguros)
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copyReferralBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(walletAddress || 'Conecta primero');
+      alert('¡Código copiado!');
+    });
+  }
 
-const shareBtn = document.getElementById('shareXBtn');
-if (shareBtn) {
-  shareBtn.addEventListener('click', () => {
-    const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Coin/`;
-    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-  });
-}
+  const shareBtn = document.getElementById('shareXBtn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Coin/`;
+      window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+    });
+  }
+});
 
 // Panda Runner
 const gameCanvas = document.getElementById('gameCanvas');
@@ -679,7 +646,7 @@ if (gameCanvas) {
 
   document.getElementById('playPractice').addEventListener('click', () => startGame(false));
   document.getElementById('playPaid').addEventListener('click', () => startGame(true));
-}
+});
 
 // Supabase
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';

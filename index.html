@@ -80,8 +80,8 @@
     }
 
     #splash img.logo {
-      width: 180px;
-      height: 180px;
+      width: 150px; /* Tamaño reducido para que no se vea gigante */
+      height: 150px;
       border-radius: 50%;
       border: 10px double var(--gold-premium);
       box-shadow: 0 0 80px var(--gold-premium);
@@ -345,10 +345,10 @@
 </head>
 <body>
 
-  <!-- Splash screen ultra-seguro (nunca se queda atascado) -->
+  <!-- Splash screen ultra-seguro -->
   <div id="splash">
     <div class="logo-container">
-      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" id="splashLogo">
+      <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
     </div>
     <h2>Bienvenido a PandoX</h2>
     <p>Conectando el universo PDX...</p>
@@ -418,8 +418,8 @@ function hideSplash() {
 let splashCheckCount = 0;
 const splashCheckInterval = setInterval(() => {
   splashCheckCount++;
-  const splashLogo = document.getElementById('splashLogo');
-  if (splashLogo && splashLogo.complete) {
+  const splash = document.getElementById('splash');
+  if (splash) {
     clearInterval(splashCheckInterval);
     setTimeout(hideSplash, 3000); // 3 segundos visibles
   }
@@ -459,7 +459,7 @@ function launchConfetti() {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height - canvas.height,
       size: Math.random() * 12 + 6,
-      speed: Math.random() * 8 + 4,
+      speed: Math.random() * 8 + 4;
       rotation: Math.random() * 2160,
       color: ['#FFD700', '#FFEA00', '#00f0ff', '#FFFFFF', '#FFFF99'][Math.floor(Math.random() * 5)]
     });
@@ -635,7 +635,7 @@ gameCanvas.addEventListener('touchstart', (e) => {
 document.getElementById('playPractice').addEventListener('click', () => startGame(false));
 document.getElementById('playPaid').addEventListener('click', () => startGame(true));
 
-// Tu lógica original (conexión, claim, ranking, etc.) - intacta del repo principal
+// Resto del script funcional (pega aquí tu código completo de conexión, claim, ranking, etc.)
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);

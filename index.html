@@ -405,49 +405,60 @@
   </div>
 
 <script>
-// Splash - versión que funcionó (doble mecanismo + logs)
-document.addEventListener('DOMContentLoaded', function() {
-  const splash = document.getElementById('splash');
-  if (!splash) {
-    console.log('[Splash] No encontrado - página cargó sin splash');
-    return;
-  }
+// Splash - versión ultra-resistente (IIFE inmediato + interval chequeo + fallback múltiple)
+(function secureSplashHide() {
+  const maxAttempts = 10; // Máximo 5 segundos de chequeo
+  let attempts = 0;
 
-  console.log('[Splash] Encontrado - iniciando timer normal de 3s');
+  function tryHideSplash() {
+    attempts++;
+    const splash = document.getElementById('splash');
+    if (!splash) {
+      if (attempts >= maxAttempts) {
+        console.log('[Splash] No encontrado después de múltiples intentos - asumiendo carga sin splash');
+      }
+      return;
+    }
 
-  setTimeout(() => {
-    console.log('[Splash] Timer normal terminado - fade');
+    console.log('[Splash] Encontrado en intento ' + attempts + ' - ocultando ahora');
+
     splash.style.transition = 'opacity 0.8s ease-out';
     splash.style.opacity = '0';
 
     setTimeout(() => {
-      console.log('[Splash] Fade completado - removiendo');
       splash.style.display = 'none';
-      splash.remove();
+      if (splash.parentNode) splash.parentNode.removeChild(splash);
+      console.log('[Splash] Ocultado y removido con éxito');
     }, 900);
-  }, 3000);
 
-  // Fallback forzado (si por algún motivo el timer no corre)
+    // Detener interval si se ocultó
+    clearInterval(splashInterval);
+  }
+
+  // Chequeo inmediato y cada 500ms
+  tryHideSplash();
+  const splashInterval = setInterval(tryHideSplash, 500);
+
+  // Fallback final a los 6 segundos
   setTimeout(() => {
-    if (splash && splash.style.opacity !== '0') {
-      console.log('[Splash] Fallback activado a los 5s - ocultando forzado');
+    clearInterval(splashInterval);
+    const splash = document.getElementById('splash');
+    if (splash) {
+      console.log('[Splash] Fallback final activado - ocultando forzado');
       splash.style.opacity = '0';
       setTimeout(() => {
         splash.style.display = 'none';
         splash.remove();
       }, 900);
     }
-  }, 5000);
-});
+  }, 6000);
+})();
 
-// MiniKit
+// MiniKit install
 if (typeof MiniKit !== 'undefined' && MiniKit.install) {
   try {
     MiniKit.install();
-    console.log('[MiniKit] Instalado');
-  } catch (e) {
-    console.error('[MiniKit] Error:', e);
-  }
+  } catch (e) {}
 }
 
 // Partículas
@@ -511,19 +522,21 @@ function launchConfetti() {
 }
 
 // Eventos botones
-document.addEventListener('DOMContentLoaded', () => {
-  const copyBtn = document.getElementById('copyReferralBtn');
-  if (copyBtn) copyBtn.addEventListener('click', () => {
+const copyBtn = document.getElementById('copyReferralBtn');
+if (copyBtn) {
+  copyBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(walletAddress || 'Conecta primero');
     alert('¡Código copiado!');
   });
+}
 
-  const shareBtn = document.getElementById('shareXBtn');
-  if (shareBtn) shareBtn.addEventListener('click', () => {
+const shareBtn = document.getElementById('shareXBtn');
+if (shareBtn) {
+  shareBtn.addEventListener('click', () => {
     const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Coin/`;
     window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   });
-});
+}
 
 // Panda Runner
 const gameCanvas = document.getElementById('gameCanvas');
@@ -573,6 +586,16 @@ if (gameCanvas) {
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('gameScore').textContent = 'Score: 0';
     document.getElementById('gameMessage').textContent = 'Toca la pantalla para saltar';
+
+    setInterval(() => {
+      if (gameRunning && Math.random() < 0.03) {
+        obstacles.push({ x: gameCanvas.width, y: 220 + Math.random() * 30, width: 50, height: 50 });
+      }
+      if (gameRunning && Math.random() < 0.04) {
+        coins.push({ x: gameCanvas.width, y: 100 + Math.random() * 100, width: 30, height: 30 });
+      }
+    }, 800);
+
     animateGame();
   }
 
@@ -654,19 +677,16 @@ if (gameCanvas) {
     }
   });
 
-  const playPracticeBtn = document.getElementById('playPractice');
-  if (playPracticeBtn) playPracticeBtn.addEventListener('click', () => startGame(false));
-
-  const playPaidBtn = document.getElementById('playPaid');
-  if (playPaidBtn) playPaidBtn.addEventListener('click', () => startGame(true));
-});
+  document.getElementById('playPractice').addEventListener('click', () => startGame(false));
+  document.getElementById('playPaid').addEventListener('click', () => startGame(true));
+}
 
 // Supabase
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// ... tu lógica completa de wallet, claim, ranking aquí
+// ... tu lógica completa de conexión wallet, claim, ranking, referrals va aquí
 </script>
 </body>
-  </html>
+</html>

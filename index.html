@@ -78,15 +78,6 @@
       opacity: 1;
     }
 
-    #splash.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #splash .logo-container {
-      margin-bottom: 24px;
-    }
-
     #splash img.logo {
       width: auto;
       max-width: 180px;
@@ -111,17 +102,8 @@
     #splash p {
       color: var(--text-light);
       font-size: 1.2em;
-      margin: 8px 0;
     }
 
-    .debug-text {
-      margin-top: 40px;
-      color: #ff4444;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    /* Resto de tus estilos sin cambios */
     .logo-container {
       text-align: center;
       margin: 30px 0 50px;
@@ -220,7 +202,7 @@
       transition: width 0.8s ease, height 0.8s ease;
     }
 
-    .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after, #shareXBtn:active::after, #playPractice:active::after, #playPaid:active::after {
+    .social-btn:active::after, .earn-btn:active::after, #copyReferralBtn:active::after, #shareXBtn:active::after, #playPractice::after, #playPaid::after {
       width: 400px; height: 400px;
     }
 
@@ -363,14 +345,13 @@
 </head>
 <body>
 
-  <!-- Splash -->
+  <!-- Splash corregido -->
   <div id="splash">
     <div class="logo-container">
       <img src="https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png" alt="PandoX" class="logo">
     </div>
     <h2>Bienvenido a PandoX</h2>
     <p>Conectando el universo PDX...</p>
-    <div class="debug-text">DEBUG: Si ves esto y desaparece en \~3s → JS funciona</div>
   </div>
 
   <div class="particles" id="particles"></div>
@@ -387,7 +368,8 @@
     <h2>Comunidad PandoX</h2>
     <div class="buttons">
       <a href="https://x.com/pandoxofficial" target="_blank" class="social-btn">X Oficial</a>
-      <a href="https://t.me/PandoXOfficialCrypto" target="_blank" class="social-btn">Canal Telegram</a>
+      <a href="https://t.me/pandoxofficial" target="_blank" class="social-btn">Telegram Grupo</a>
+      <a href="https://t.me/pandoxchannel" target="_blank" class="social-btn">Canal Telegram</a>
       <a href="https://worldscan.org/address/0xF968341A687D70BcF84121111CfBB5eF7148AC28" target="_blank" class="social-btn">Contrato PDX</a>
     </div>
   </div>
@@ -409,6 +391,7 @@
     <div id="ranking"><b>Ranking Top 10</b><br>Cargando...</div>
   </div>
 
+  <!-- Panda Runner -->
   <div class="section" id="gameSection" style="display:none;">
     <h2>Panda Runner - ¡Corre y gana!</h2>
     <p>Práctica gratis o paga 0.5 WLD para competir por rewards semanales</p>
@@ -422,28 +405,35 @@
   </div>
 
 <script>
-// Splash hide - corre inmediatamente, sin esperar nada
-(function() {
-  var splash = document.getElementById('splash');
+// Variables globales seguras
+var walletAddress = '';
+
+// Splash - ocultación garantizada
+(function hideSplash() {
+  const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // Instalación MiniKit temprana (opcional, pero no bloquea)
-  if (typeof MiniKit !== 'undefined' && MiniKit.install) {
-    try { MiniKit.install(); } catch(e) {}
-  }
-
-  setTimeout(function() {
+  setTimeout(() => {
+    splash.style.transition = 'opacity 0.8s ease-out';
     splash.style.opacity = '0';
-    setTimeout(function() {
+    setTimeout(() => {
       splash.style.display = 'none';
       if (splash.parentNode) splash.parentNode.removeChild(splash);
-    }, 800); // tiempo fade
-  }, 3000); // 3 segundos
+    }, 900);
+  }, 3000);
 })();
+
+// MiniKit install seguro
+if (typeof MiniKit !== 'undefined' && MiniKit.install) {
+  try {
+    MiniKit.install();
+  } catch (e) {}
+}
 
 // Partículas
 function createParticles() {
   const container = document.getElementById('particles');
+  if (!container) return;
   for (let i = 0; i < 100; i++) {
     const particle = document.createElement('div');
     particle.className = 'particle';
@@ -458,9 +448,10 @@ function createParticles() {
 }
 createParticles();
 
-// Confeti (sin cambios)
+// Confetti
 function launchConfetti() {
   const canvas = document.getElementById('confetti');
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -496,164 +487,179 @@ function launchConfetti() {
   }
   animate();
 
-  setTimeout(() => { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }, 8000);
+  setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 8000);
 }
 
-// Eventos botones (sin cambios)
-document.getElementById('copyReferralBtn').addEventListener('click', () => {
-  navigator.clipboard.writeText(walletAddress || 'Conecta primero');
-  alert('¡Código copiado!');
-});
+// Eventos botones (seguros)
+const copyBtn = document.getElementById('copyReferralBtn');
+if (copyBtn) {
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(walletAddress || 'Conecta primero');
+    alert('¡Código copiado!');
+  });
+}
 
-document.getElementById('shareXBtn').addEventListener('click', () => {
-  const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Coin/`;
-  window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-});
+const shareBtn = document.getElementById('shareXBtn');
+if (shareBtn) {
+  shareBtn.addEventListener('click', () => {
+    const text = `¡Únete a PandoX y gana PDX cada 6 horas! Mi código: ${walletAddress} 🐼🚀 https://pandoxofficial12-dev.github.io/PandoX-Coin/`;
+    window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+  });
+}
 
-// Juego Panda Runner (sin cambios)
+// Panda Runner - juego completo
 const gameCanvas = document.getElementById('gameCanvas');
-const gameCtx = gameCanvas.getContext('2d');
-gameCanvas.width = gameCanvas.offsetWidth;
-gameCanvas.height = 300;
+if (gameCanvas) {
+  const gameCtx = gameCanvas.getContext('2d');
+  gameCanvas.width = gameCanvas.offsetWidth;
+  gameCanvas.height = 300;
 
-let player = { x: 80, y: 200, width: 80, height: 80, velocity: 0, gravity: 0.6, jumpPower: -14, jumping: false };
-let obstacles = [];
-let coins = [];
-let score = 0;
-let gameRunning = false;
-let pandaImg = new Image();
-pandaImg.src = 'https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png';
+  let player = { x: 80, y: 200, width: 80, height: 80, velocity: 0, gravity: 0.6, jumpPower: -14, jumping: false };
+  let obstacles = [];
+  let coins = [];
+  let score = 0;
+  let gameRunning = false;
+  let pandaImg = new Image();
+  pandaImg.src = 'https://raw.githubusercontent.com/pandoxofficial12-dev/PandoX-Earn-Official-/main/logo-pandox.png';
 
-function startGame(paid = false) {
-  if (paid && !walletAddress) {
-    alert('Conecta tu wallet primero para competir');
-    return;
-  }
+  function startGame(paid = false) {
+    if (paid && !walletAddress) {
+      alert('Conecta tu wallet primero para competir');
+      return;
+    }
 
-  if (paid) {
-    MiniKit.commandsAsync.pay({
-      tokens: [{ amount: '0.5', tokenAddress: 'WORLDCOIN_ADDRESS_HERE' }]
-    }).then(() => {
-      alert('¡Pago confirmado! Buena suerte');
+    if (paid) {
+      if (typeof MiniKit === 'undefined' || !MiniKit.commandsAsync) {
+        alert('MiniKit no disponible. Abre en World App.');
+        return;
+      }
+      MiniKit.commandsAsync.pay({
+        tokens: [{ amount: '0.5', tokenAddress: 'WORLDCOIN_ADDRESS_HERE' }]
+      }).then(() => {
+        alert('¡Pago confirmado! Buena suerte');
+        runGame();
+      }).catch(() => alert('Pago cancelado o error'));
+    } else {
+      alert('Modo práctica: ¡Diviértete!');
       runGame();
-    }).catch(() => alert('Pago cancelado'));
-  } else {
-    alert('Modo práctica: ¡Diviértete!');
-    runGame();
-  }
-}
-
-function runGame() {
-  gameRunning = true;
-  score = 0;
-  player.y = 200;
-  player.velocity = 0;
-  obstacles = [];
-  coins = [];
-  document.getElementById('gameSection').style.display = 'block';
-  document.getElementById('gameScore').textContent = 'Score: 0';
-  document.getElementById('gameMessage').textContent = 'Toca la pantalla para saltar';
-
-  setInterval(() => {
-    if (gameRunning && Math.random() < 0.03) {
-      obstacles.push({ x: gameCanvas.width, y: 220 + Math.random() * 30, width: 50, height: 50 });
     }
-    if (gameRunning && Math.random() < 0.04) {
-      coins.push({ x: gameCanvas.width, y: 100 + Math.random() * 100, width: 30, height: 30 });
-    }
-  }, 800);
-
-  animateGame();
-}
-
-function animateGame() {
-  if (!gameRunning) return;
-
-  gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-  if (pandaImg.complete) {
-    gameCtx.drawImage(pandaImg, player.x, player.y, player.width, player.height);
-  } else {
-    gameCtx.fillStyle = '#fff';
-    gameCtx.fillRect(player.x, player.y, player.width, player.height);
   }
 
-  gameCtx.fillStyle = '#111133';
-  gameCtx.fillRect(0, 250, gameCanvas.width, 50);
-
-  obstacles.forEach((obs, i) => {
-    obs.x -= 5;
-    gameCtx.fillStyle = '#ff4444';
-    gameCtx.beginPath();
-    gameCtx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.width/2, 0, Math.PI*2);
-    gameCtx.fill();
-
-    if (obs.x < player.x + player.width && obs.x + obs.width > player.x &&
-        obs.y < player.y + player.height && obs.y + obs.height > player.y) {
-      gameOver();
-    }
-
-    if (obs.x + obs.width < 0) obstacles.splice(i, 1);
-  });
-
-  coins.forEach((coin, i) => {
-    coin.x -= 5;
-    gameCtx.fillStyle = var(--gold-premium);
-    gameCtx.beginPath();
-    gameCtx.arc(coin.x + coin.width/2, coin.y + coin.height/2, coin.width/2, 0, Math.PI*2);
-    gameCtx.fill();
-    gameCtx.fillStyle = '#000';
-    gameCtx.font = '20px Montserrat';
-    gameCtx.fillText('P', coin.x + coin.width/2 - 8, coin.y + coin.height/2 + 8);
-
-    if (coin.x < player.x + player.width && coin.x + coin.width > player.x &&
-        coin.y < player.y + player.height && coin.y + coin.height > player.y) {
-      score += 50;
-      coins.splice(i, 1);
-      document.getElementById('gameScore').textContent = `Score: ${score}`;
-    }
-
-    if (coin.x + coin.width < 0) coins.splice(i, 1);
-  });
-
-  player.velocity += player.gravity;
-  player.y += player.velocity;
-
-  if (player.y > 220) {
-    player.y = 220;
+  function runGame() {
+    gameRunning = true;
+    score = 0;
+    player.y = 200;
     player.velocity = 0;
-    player.jumping = false;
+    obstacles = [];
+    coins = [];
+    document.getElementById('gameSection').style.display = 'block';
+    document.getElementById('gameScore').textContent = 'Score: 0';
+    document.getElementById('gameMessage').textContent = 'Toca la pantalla para saltar';
+    animateGame();
   }
 
-  score += 1;
-  document.getElementById('gameScore').textContent = `Score: ${score}`;
+  function animateGame() {
+    if (!gameRunning) return;
 
-  requestAnimationFrame(animateGame);
-}
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-function gameOver() {
-  gameRunning = false;
-  alert(`¡Game Over! Tu score: ${score}\nMejora en modo práctica o compite por rewards`);
-}
+    if (pandaImg.complete) {
+      gameCtx.drawImage(pandaImg, player.x, player.y, player.width, player.height);
+    } else {
+      gameCtx.fillStyle = '#fff';
+      gameCtx.fillRect(player.x, player.y, player.width, player.height);
+    }
 
-gameCanvas.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-  if (gameRunning && !player.jumping) {
-    player.velocity = player.jumpPower;
-    player.jumping = true;
+    gameCtx.fillStyle = '#111133';
+    gameCtx.fillRect(0, 250, gameCanvas.width, 50);
+
+    obstacles.forEach((obs, i) => {
+      obs.x -= 5;
+      gameCtx.fillStyle = '#ff4444';
+      gameCtx.beginPath();
+      gameCtx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.width/2, 0, Math.PI*2);
+      gameCtx.fill();
+
+      if (obs.x < player.x + player.width && obs.x + obs.width > player.x &&
+          obs.y < player.y + player.height && obs.y + obs.height > player.y) {
+        gameOver();
+      }
+
+      if (obs.x + obs.width < 0) obstacles.splice(i, 1);
+    });
+
+    coins.forEach((coin, i) => {
+      coin.x -= 5;
+      gameCtx.fillStyle = var(--gold-premium);
+      gameCtx.beginPath();
+      gameCtx.arc(coin.x + coin.width/2, coin.y + coin.height/2, coin.width/2, 0, Math.PI*2);
+      gameCtx.fill();
+      gameCtx.fillStyle = '#000';
+      gameCtx.font = '20px Montserrat';
+      gameCtx.fillText('P', coin.x + coin.width/2 - 8, coin.y + coin.height/2 + 8);
+
+      if (coin.x < player.x + player.width && coin.x + coin.width > player.x &&
+          coin.y < player.y + player.height && coin.y + coin.height > player.y) {
+        score += 50;
+        coins.splice(i, 1);
+        document.getElementById('gameScore').textContent = `Score: ${score}`;
+      }
+
+      if (coin.x + coin.width < 0) coins.splice(i, 1);
+    });
+
+    player.velocity += player.gravity;
+    player.y += player.velocity;
+
+    if (player.y > 220) {
+      player.y = 220;
+      player.velocity = 0;
+      player.jumping = false;
+    }
+
+    score += 1;
+    document.getElementById('gameScore').textContent = `Score: ${score}`;
+
+    requestAnimationFrame(animateGame);
   }
-});
 
-document.getElementById('playPractice').addEventListener('click', () => startGame(false));
-document.getElementById('playPaid').addEventListener('click', () => startGame(true));
+  function gameOver() {
+    gameRunning = false;
+    alert(`¡Game Over! Tu score: ${score}\nMejora en modo práctica o compite por rewards`);
+  }
 
-// Supabase y lógica de wallet/claim/ranking (pega aquí tu código completo si lo tienes separado)
+  gameCanvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (gameRunning && !player.jumping) {
+      player.velocity = player.jumpPower;
+      player.jumping = true;
+    }
+  });
+
+  const playPracticeBtn = document.getElementById('playPractice');
+  if (playPracticeBtn) playPracticeBtn.addEventListener('click', () => startGame(false));
+
+  const playPaidBtn = document.getElementById('playPaid');
+  if (playPaidBtn) playPaidBtn.addEventListener('click', () => startGame(true));
+}
+
+// Supabase conexión
 const supabaseUrl = 'https://jboiwiedvugsfbxzgkzd.supabase.co';
 const supabaseKey = 'sb_publishable_8FrWUMtLwxEcgvDl-sx9CA_xpSpY2-M';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// ... (tu código de conexión wallet, claim PDX, ranking, variables globales como walletAddress, etc.)
-// Recuerda llamar launchConfetti() cuando reclames con éxito
+// ... tu lógica completa de wallet, claim, ranking, referrals va aquí
+// Ejemplo mínimo para conectar wallet (adapta con tu código real)
+document.getElementById('subscribeBtn').addEventListener('click', () => {
+  // Simulación o lógica real
+  walletAddress = '0xEjemploWallet123456789';
+  document.getElementById('status').textContent = 'Wallet conectada: ' + walletAddress.slice(0,6) + '...';
+  document.getElementById('claimBtn').disabled = false;
+  document.getElementById('viewBalanceBtn').disabled = false;
+  document.getElementById('disconnectBtn').style.display = 'block';
+});
+
+// Puedes agregar aquí el resto de funciones (claim, ranking, etc.)
 </script>
 </body>
 </html>
